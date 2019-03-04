@@ -91,7 +91,10 @@ class Heap(object):
             return 1
         except:
             print('there is no way to comare the inserted objects\n' \
-                'suggestion: you may need to define the \'__eq__\' and \'__lt__\' operators for the class of the object you are inserting')
+                'suggestion: either objects of different types are being inserted or\n' \
+                'you may need to define the \'__eq__\' and \'__lt__\' operators for the class of the object you are inserting')
+            self.__heap [self.__length] = None
+            self.__length -= 1
             return 0
 
     def top(self):

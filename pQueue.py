@@ -45,7 +45,7 @@ class pQueue(object):
 
             function above is the defualt compare function, which produces a max heap
 
-        NB if you are making a priority queue to contain user defined classes,
+        NB if you are making a priority queue to contain user defined types,
             you need to make sure that your compare function is capable of comapring the objects of that class
         '''
         self.__myHeap = Heap(size, cmpFxn)
@@ -58,6 +58,12 @@ class pQueue(object):
         else (new size < old size) returns 0
         '''
         return self.__myHeap.setMaxSize(size)
+
+    def getLength(self) :
+        '''
+        returns the number of elements in queue
+        '''
+        return self.__myHeap.getLength()
         
     def insert(self, data):
         '''
