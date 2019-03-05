@@ -22,6 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 '''
+import sys
 
 # A Generic container that uses the heap datastructure
 # It will be used to create priority queues
@@ -90,9 +91,9 @@ class Heap(object):
                 ip = self.__getParent(ip)
             return 1
         except:
-            print('there is no way to comare the inserted objects\n' \
+            sys.stderr.write('there is no way to comare the inserted objects\n' \
                 'suggestion: either objects of different types are being inserted or\n' \
-                'you may need to define the \'__eq__\' and \'__lt__\' operators for the class of the object you are inserting')
+                'you may need to define the \'__eq__\' and \'__lt__\' operators for the class of the object you are inserting\n')
             self.__heap [self.__length] = None
             self.__length -= 1
             return 0
@@ -120,8 +121,8 @@ class Heap(object):
             r = self.__getRight(n)
             try:
                 rp = l
-                if self.__heap[r] != None:
-                    if self.__cmp(self.__heap[r], self.__heap[l]):
+                if r <= self.__length:
+                    if self.__heap[r] != None and self.__cmp(self.__heap[r], self.__heap[l]):
                         rp = r
                 if rp > self.__length:
                     break

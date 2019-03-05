@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 '''
 from Heap import *
+import sys
 
 # A generic bounded priority queue container
 
@@ -101,10 +102,9 @@ class pQueue(object):
            has the __str__ method defined.
         '''
         try:
-            s = str(self.__myHeap)
-            return ("Current Queue: " + s)
+            return str(self.__myHeap)
         except:
-            print('the \'__str__\' method is not defined for the objects in the queue')
+            sys.stderr.write('the \'__str__\' method is not defined for the objects in the queue\n')
             return ''
 
 
