@@ -63,7 +63,7 @@ class orderedSet(object):
 		'''
 		string reprisentation of the ordered set object
 		'''
-		return 'orderedSet, size: {}'.format(self.__size)
+		return 'orderedSet (size: {}, elements type: {})'.format(self.__size, self.type())
 
 	def __len__ (self):
 		'''
@@ -85,11 +85,24 @@ class orderedSet(object):
 		unions the current set with the second set (other)
 		'''
 		if not isinstance (other, self.__class__):
-			raise TypeError('only an ordered set can be union\'d with the current set, '\
-				'while you are trying to union an object of type {}'.format(type(other)))
+			error = 'only an ordered set can be union\'d with the current set, '\
+				'while {} is an object of type {}'.format(other, type(other))
+			raise TypeError(error)
+
+		if self.__size != 0:
+			if self.type() != other.type():
+				error = 'elements of the second set are not of the same type as this set'\
+					' {} != {}'.format(self.type(), other.type())
+				raise TypeError(error)
 		for i in other:
 			self.__rbt.insert(i)
 		return self
+
+	def type (self):
+		'''
+		returns the type of elements in the set
+		'''
+		return type(self.__rbt.getRoot().key)
 
 	def isEmpty (self):
 		'''
@@ -103,6 +116,11 @@ class orderedSet(object):
 		returns 1 if successful
 		0 if not (element already is in the set)
 		'''
+		if self.__size != 0:
+			if self.type() != type(element):
+				error = '{} is not of the same type as the elements of the set'\
+					' {} != {}'.format(element, self.type(), type(element))
+				raise TypeError(error)
 		status = self.__rbt.insert(element)
 		if status == 1:
 			self.__size += 1
@@ -114,6 +132,11 @@ class orderedSet(object):
 		returns 1 if successful
 		0 if not (element doesn't exist in the set)
 		'''
+		if self.__size != 0:
+			if self.type() != type(element):
+				error = '{} is not of the same type as the elements of the set'\
+					' {} != {}'.format(element, self.type(), type(element))
+				raise TypeError(error)
 		status = self.__rbt.delete(element)
 		if status == 1:
 			self.__size -= 1
@@ -125,8 +148,15 @@ class orderedSet(object):
 		unions the current set with the second set (other)
 		'''
 		if not isinstance (other, self.__class__):
-			raise TypeError('only an ordered set can be union\'d with the current set, '\
-				'while you are trying to union an object of type {}'.format(type(other)))
+			error = 'only an ordered set can be union\'d with the current set, '\
+				'while {} is an object of type {}'.format(other, type(other))
+			raise TypeError(error)
+
+		if self.__size != 0:
+			if self.type() != other.type():
+				error = 'elements of the second set are not of the same type as this set'\
+					' {} != {}'.format(self.type(), other.type())
+				raise TypeError(error)
 		for i in other:
 			self.__rbt.insert(i)
 

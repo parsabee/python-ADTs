@@ -64,7 +64,7 @@ class pQueue(object):
         '''
         string reprisentation of the priority queue object
         '''
-        return 'pQueue, length: {}'.format(self.__myHeap.getLength)
+        return 'pQueue (length: {}, elements type: {})'.format(self.__myHeap.getLength(), self.type())
 
     def __iter__ (self):
         '''
@@ -73,9 +73,8 @@ class pQueue(object):
         '''
         self.it = 1
         heap = self.__myHeap.getHeap()
-        for i in range(1, self.__myHeap.getLength()):
-            yield i
-        return self
+        for i in range(1, self.__myHeap.getLength()+1):
+            yield self.__myHeap.getHeap()[i]
 
     def __next__ (self):
         '''
@@ -95,6 +94,22 @@ class pQueue(object):
         '''
         return element in self.__myHeap.getHeap()
 
+    def __getitem__ (self, i):
+        '''
+        operator []
+        returns an the item at index i
+        '''
+        try:
+            return self.__myHeap.getHeap()[i+1]
+        except IndexError:
+            sys.err.write('Index out of range')
+            return None
+
+    def type (self):
+        '''
+        retunrs the type of elements in the queue
+        '''
+        return type(self.__myHeap.getHeap()[1])
 
     def setSize(self, size) :
         '''
@@ -117,6 +132,11 @@ class pQueue(object):
         if successful returns 1
         else (queue is full) returns 0
         '''
+        if self.getLength() != 0:
+            if self.type() != type(data):
+                error = '{} has a different type than the element of the pQueue'\
+                    ' {} != {}'.format(data, type(data), self.type())
+                raise TypeError (error)
         return self.__myHeap.insert(data)
         
     def top(self):

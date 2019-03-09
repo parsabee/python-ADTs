@@ -45,6 +45,9 @@ class RBT:
         self.__s = ''
         return s
 
+    def getRoot (self):
+        return self.__root
+
     def contains(self, key) :
         tmp = self.__root
         while tmp != self.__sentinel and tmp != None:
