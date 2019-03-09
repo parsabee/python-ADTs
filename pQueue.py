@@ -46,10 +46,55 @@ class pQueue(object):
 
             function above is the defualt compare function, which produces a max heap
 
-        NB if you are making a priority queue to contain user defined types,
+        NB - if you are making a priority queue to contain user defined types,
             you need to make sure that your compare function is capable of comapring the objects of that class
         '''
         self.__myHeap = Heap(size, cmpFxn)
+
+    def __str__(self):
+        '''
+        prints the element of the queue
+
+        NB To use this function, you need to make sure that the class of the object that is being inserted to the queue,
+           has the __str__ method defined.
+        '''
+        return str(self.__myHeap)
+
+    def __repr__ (self):
+        '''
+        string reprisentation of the priority queue object
+        '''
+        return 'pQueue, length: {}'.format(self.__myHeap.getLength)
+
+    def __iter__ (self):
+        '''
+        itearator
+        you can iterate through the queue by using `for i in queue'
+        '''
+        self.it = 1
+        heap = self.__myHeap.getHeap()
+        for i in range(1, self.__myHeap.getLength()):
+            yield i
+        return self
+
+    def __next__ (self):
+        '''
+        next operator used for the iterator
+        '''
+        if self.it < self.__myHeap.getLength():
+            res = self.__myHeap.getHeap()[self.it]
+            self.it += 1
+            return res
+        else:
+            raise StopIteration
+
+    def __contains__ (self, element):
+        '''
+        the `in' operator
+        checks to see if element exists in the queue
+        '''
+        return element in self.__myHeap.getHeap()
+
 
     def setSize(self, size) :
         '''
@@ -94,18 +139,6 @@ class pQueue(object):
         '''
         return self.__myHeap.getLength() <= 1
     
-    def __str__(self):
-        '''
-        prints the element of the queue
-
-        NB To use this function, you need to make sure that the class of the object that is being inserted to the queue,
-           has the __str__ method defined.
-        '''
-        try:
-            return str(self.__myHeap)
-        except:
-            sys.stderr.write('the \'__str__\' method is not defined for the objects in the queue\n')
-            return ''
 
 
     

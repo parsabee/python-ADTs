@@ -50,7 +50,7 @@ class RBT:
         while tmp != self.__sentinel and tmp != None:
             if self.__cmp(tmp.key, key) == 0:
                 return True
-            elif self.__cmp(tmp.key, key) == 1:
+            if self.__cmp(tmp.key, key) == 1:
                 tmp = tmp.leftChild
             else:
                 tmp = tmp.rightChild
@@ -62,7 +62,7 @@ class RBT:
         while tmp != self.__sentinel and tmp != None:
             if self.__cmp(tmp.key, key) == 0:
                 return tmp
-            elif self.__cmp(tmp.key, key) == 1:
+            if self.__cmp(tmp.key, key) == 1:
                 tmp = tmp.leftChild
             else:
                 tmp = tmp.rightChild
@@ -80,9 +80,9 @@ class RBT:
         tmp = self.__root
         while tmp != self.__sentinel:
             p = tmp
-            if tmp.key == key:
+            if self.__cmp(key, tmp.key) == 0:
                 return 0
-            if self.__cmp(key, tmp.key):
+            if self.__cmp(key, tmp.key) == 1:
                 tmp = tmp.rightChild                
             else:
                 tmp = tmp.leftChild
@@ -131,7 +131,7 @@ class RBT:
     def delete(self, key):
         z = self.__search(key)
         if z == None:
-            return z
+            return 0
         if z.leftChild is self.__sentinel or z.rightChild is self.__sentinel:
             y = z
         else:

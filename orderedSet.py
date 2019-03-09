@@ -37,7 +37,7 @@ class orderedSet(object):
 			the function must return 0 if first==second, -1 if first<second, and 1 if first>second
 			
 			NB - there is a default compare function for generic types,
-				 however the user is responsible for providing a compare function for user defined types
+			however the user is responsible for providing a compare function for user defined types
 
 		'''
 		self.__rbt = RBT(cmpFxn)
@@ -59,6 +59,12 @@ class orderedSet(object):
 		'''
 		return str(self.__rbt)
 
+	def __repr__ (self):
+		'''
+		string reprisentation of the ordered set object
+		'''
+		return 'orderedSet, size: {}'.format(self.__size)
+
 	def __len__ (self):
 		'''
 		`len' function can be used to invoke this method
@@ -72,6 +78,18 @@ class orderedSet(object):
 		the elements can be iterated over through `for i in orderedSet'
 		'''
 		return self.__rbt.__iter__()
+
+	def __add__ (self, other):
+		'''
+		the + operator,
+		unions the current set with the second set (other)
+		'''
+		if not isinstance (other, self.__class__):
+			raise TypeError('only an ordered set can be union\'d with the current set, '\
+				'while you are trying to union an object of type {}'.format(type(other)))
+		for i in other:
+			self.__rbt.insert(i)
+		return self
 
 	def isEmpty (self):
 		'''
@@ -100,6 +118,17 @@ class orderedSet(object):
 		if status == 1:
 			self.__size -= 1
 		return status
+
+	def union (self, other):
+		'''
+		same as __add__
+		unions the current set with the second set (other)
+		'''
+		if not isinstance (other, self.__class__):
+			raise TypeError('only an ordered set can be union\'d with the current set, '\
+				'while you are trying to union an object of type {}'.format(type(other)))
+		for i in other:
+			self.__rbt.insert(i)
 
 	def clear (self):
 		'''
