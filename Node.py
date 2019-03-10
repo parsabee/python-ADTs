@@ -25,18 +25,33 @@ SOFTWARE.
 '''
 Modified by Parsa Bagheri
 '''
-class RB_Node(object):
-    def __init__(self, key, left = None, right = None, parent = None, color = 'red'):
+class Node (object):
+    def __init__(self, key, value = None, left = None, right = None, parent = None):
         self.key = key
+        self.value = value
         self.leftChild = left
         self.rightChild = right
         self.parent = parent
-        self.color = color
 
     def __eq__(self, other):
         if other == None or self == None:
             return False
         return self.key == other.key
+
+    def __iter__(self):
+        # __iter__ defines an interator for objects of the RB_Node class
+        # allows for operations like:
+        # for node in Tree:
+        # ... print( Tree.get(node) )
+
+        if self:
+            if self.hasLeftChild():
+                for elem in self.leftChild:
+                    yield elem
+            yield self.key
+            if self.hasRightChild():
+                for elem in self.rightChild:
+                    yield elem
 
     def hasLeftChild(self):
         return self.leftChild.parent == self and self.leftChild != self
@@ -49,16 +64,6 @@ class RB_Node(object):
 
     def isRightChild(self):
         return self.parent.rightChild == self and self.parent != self
-
-    def replaceNodeData(self, key, left = None, right = None, color = 'red'):
-        self.key = key
-        self.leftChild = left
-        self.rightChild = right
-        if self.hasLeftChild():
-            self.leftChild.parent = self
-        if self.hasRightChild():
-            self.rightChild.parent = self
-        self.color = color
 
     def findSuccessor(self):
         # successor's key is the next highest key from the current node
@@ -89,17 +94,8 @@ class RB_Node(object):
             currentNode = currentNode.leftChild
         return currentNode
 
-    def __iter__(self):
-        # __iter__ defines an interator for objects of the RB_Node class
-        # allows for operations like:
-        # for node in Tree:
-        # ... print( Tree.get(node) )
+class RB_Node (Node):
+    def __init__(self, key, value = None, left = None, right = None, parent = None, color = 'red'):
+        Node.__init__(self, key, value, left, right, parent)
+        self.color = color
 
-        if self:
-            if self.hasLeftChild():
-                for elem in self.leftChild:
-                    yield elem
-            yield self.key
-            if self.hasRightChild():
-                for elem in self.rightChild:
-                    yield elem
