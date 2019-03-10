@@ -97,13 +97,11 @@ class pQueue(object):
     def __getitem__ (self, i):
         '''
         operator []
-        returns an the item at index i
+        returns the item at index i
         '''
-        try:
-            return self.__myHeap.getHeap()[i+1]
-        except IndexError:
-            sys.err.write('Index out of range')
-            return None
+        if i+1 > self.__myHeap.getLength():
+            raise IndexError
+        return self.__myHeap.getHeap()[i+1]
 
     def type (self):
         '''
