@@ -99,7 +99,7 @@ class pQueue(object):
         operator []
         returns the item at index i
         '''
-        if i+1 > self.__myHeap.getLength():
+        if i+1 > self.__myHeap.getLength() or i < 0:
             raise IndexError
         return self.__myHeap.getHeap()[i+1]
 
