@@ -61,7 +61,7 @@ class orderedSet(object):
 
 	def __repr__ (self):
 		'''
-		string reprisentation of the ordered set object
+		string representation of the ordered set object
 		'''
 		return 'orderedSet (size: {}, elements type: {})'.format(self.__size, self.type())
 
@@ -84,18 +84,7 @@ class orderedSet(object):
 		the + operator,
 		unions the current set with the second set (other)
 		'''
-		if not isinstance (other, self.__class__):
-			error = 'only an ordered set can be union\'d with the current set, '\
-				'while {} is an object of type {}'.format(other, type(other))
-			raise TypeError(error)
-
-		if self.__size != 0:
-			if self.type() != other.type():
-				error = 'elements of the second set are not of the same type as this set'\
-					' {} != {}'.format(self.type(), other.type())
-				raise TypeError(error)
-		for i in other:
-			self.__rbt.insert(i)
+		self.union(other)
 		return self
 
 	def type (self):
@@ -144,7 +133,6 @@ class orderedSet(object):
 
 	def union (self, other):
 		'''
-		same as __add__
 		unions the current set with the second set (other)
 		'''
 		if not isinstance (other, self.__class__):
