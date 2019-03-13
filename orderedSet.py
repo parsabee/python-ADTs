@@ -30,7 +30,7 @@ class orderedSet(object):
 	def __init__ (self, cmpFxn = lambda x, y: 1 if x > y else (0 if x == y else -1)):
 		'''
 		this ordered set uses a red black tree structure.
-		red black tree is an efficiant choice, because of the better amortized asymptotic complexity of insert and delete (O(log n))
+		red black tree is an efficiant choice, because of the better amortized asymptotic complexity of look-up (O(log n))
 		initializer takes one argument:
 		(1) cmpFxn:
 			the compare function is used to determine the order of the elements being inserted,
