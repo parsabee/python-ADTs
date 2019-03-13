@@ -24,6 +24,17 @@ from RedBlackTree import RBT_map
 
 class orderedMap (object):
 	def __init__ (self, cmpFxn = lambda x, y: 1 if x > y else (0 if x == y else -1)):
+		'''
+		this ordered map uses a red black tree structure.
+		red black tree is an efficiant choice, because of the better amortized asymptotic complexity of look-up (O(log n))
+		initializer takes one argument:
+		(1) cmpFxn:
+			the compare function is used to determine the order of the keys being inserted,
+			the function must return 0 if first==second, -1 if first<second, and 1 if first>second
+			
+			NB - there is a default compare function for generic types,
+			however the user is responsible for providing a compare function for user defined types
+		'''
 		self.__rbt = RBT_map(cmpFxn)
 		self.__cmp = cmpFxn
 		self.__size = 0
