@@ -26,9 +26,8 @@ SOFTWARE.
 Modified by Parsa Bagheri
 '''
 class Node (object):
-    def __init__(self, key, value = None, left = None, right = None, parent = None):
+    def __init__(self, key, left = None, right = None, parent = None):
         self.key = key
-        self.value = value
         self.leftChild = left
         self.rightChild = right
         self.parent = parent
@@ -95,7 +94,7 @@ class Node (object):
         return currentNode
 
 class RB_Node (Node):
-    def __init__(self, key, value = None, left = None, right = None, parent = None, color = 'red'):
-        Node.__init__(self, key, value, left, right, parent)
+    def __init__(self, key, left = None, right = None, parent = None, color = 'red'):
+        Node.__init__(self, key, left, right, parent)
         self.color = color
 

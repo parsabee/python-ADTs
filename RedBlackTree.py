@@ -59,7 +59,7 @@ class RBT (object):
                 tmp = tmp.rightChild
         return False
 
-    def __search(self, key) :
+    def _search(self, key) :
 
         tmp = self._root
         while tmp != self._sentinel and tmp != None:
@@ -71,18 +71,12 @@ class RBT (object):
                 tmp = tmp.rightChild
         return None
 
-    def getVal(self, key):
-        n = self.__search(key)
-        if n != None:
-            return n.value
-        return None
+    def _newNode(self, key):
+        return RB_Node(key = key, left = self._sentinel, right = self._sentinel, parent = self._sentinel)
 
-    def __newNode(self, key, value):
-        return RB_Node(key = key, value = value, left = self._sentinel, right = self._sentinel, parent = self._sentinel)
-
-    def insert(self, key, value = None):
+    def insert(self, key):
         if self._root == None:
-            self._root = self.__newNode(key, value)
+            self._root = self._newNode(key)
             self._root.color = 'black'
             return 1
         p = None
@@ -92,19 +86,19 @@ class RBT (object):
             if self._cmp(key, tmp.key) == 0:
                 return 0
             if self._cmp(key, tmp.key) == 1:
-                tmp = tmp.rightChild                
+                tmp = tmp.rightChild
             else:
                 tmp = tmp.leftChild
-        tmp = self.__newNode(key, value)
+        tmp = self._newNode(key)
         if self._cmp(key, p.key) == 1:
             p.rightChild = tmp
         else:
             p.leftChild = tmp
         tmp.parent = p
-        self.__rb_insert_fixup(tmp)
+        self._rb_insert_fixup(tmp)
         return 1
 
-    def __rb_insert_fixup(self, z):
+    def _rb_insert_fixup(self, z):
         while z.parent.color == 'red':
             if z.parent == z.parent.parent.leftChild:
                 y = z.parent.parent.rightChild
@@ -138,7 +132,7 @@ class RBT (object):
         self._root.color = 'black'
 
     def delete(self, key):
-        z = self.__search(key)
+        z = self._search(key)
         if z == None:
             return 0
         if z.leftChild is self._sentinel or z.rightChild is self._sentinel:
@@ -162,13 +156,12 @@ class RBT (object):
                 y.parent.rightChild = x
         if y is not z:
             z.key = y.key
-            z.value = y.value
         if y.color == 'black':
-            self.__rb_delete_fixup(x, p)
+            self._rb_delete_fixup(x, p)
 
         return 1
 
-    def __rb_delete_fixup(self, x, y):
+    def _rb_delete_fixup(self, x, y):
         while x != self._root and x.color == 'black':
             if x == y.leftChild:
                 w = y.rightChild
@@ -291,18 +284,72 @@ class RBT (object):
         x.parent = y
 
 class RBT_map (RBT):
+
+    def contains(self, key) :
+        tmp = self._root
+        while tmp != self._sentinel and tmp != None:
+            if self._cmp(tmp.key[0], key) == 0:
+                return True
+            if self._cmp(tmp.key[0], key) == 1:
+                tmp = tmp.leftChild
+            else:
+                tmp = tmp.rightChild
+        return False
+
+    def insert(self, pair):
+        if self._root == None:
+            self._root = self._newNode(pair)
+            self._root.color = 'black'
+            return
+        p = None
+        tmp = self._root
+        while tmp != self._sentinel:
+            p = tmp
+            if self._cmp(pair[0], tmp.key[0]) == 0:
+                tmp.key[1] = pair[1]
+                return
+            if self._cmp(pair[0], tmp.key[0]) == 1:
+                tmp = tmp.rightChild
+            else:
+                tmp = tmp.leftChild
+        tmp = self._newNode(pair)
+        if self._cmp(pair[0], p.key[0]) == 1:
+            p.rightChild = tmp
+        else:
+            p.leftChild = tmp
+        tmp.parent = p
+        self._rb_insert_fixup(tmp)
+        return
+
+    def _search(self, key):
+        tmp = self._root
+        while tmp != self._sentinel and tmp != None:
+            if self._cmp(tmp.key[0], key) == 0:
+                return tmp
+            if self._cmp(tmp.key[0], key) == 1:
+                tmp = tmp.leftChild
+            else:
+                tmp = tmp.rightChild
+        return None
+
+    def getVal(self, key):
+        n = self._search(key)
+        if n != None:
+            return n.key[1]
+        return None
+
     def _walk_str(self, order, top):
         if top != self._sentinel:
             self._walk_str("in-order", top.leftChild)
-            self._s += str(top.key) + ': ' + str(top.value) + ', '
+            self._s += str(top.key[0]) + ': ' + str(top.key[1]) + ', '
             self._walk_str("in-order", top.rightChild)
 
     def _pretty_print(self, n, pretty):
         if pretty:
             if n.color == 'red':
-                sys.stdout.write('\033[1;31m{}: {} '.format(n.key, n.value))
+                sys.stdout.write('\033[1;31m{}: {} '.format(n.key[0], n.key[1]))
             else:
-                sys.stdout.write('\033[1;30m{}: {} '.format(n.key, n.value))
+                sys.stdout.write('\033[1;30m{}: {} '.format(n.key[0], n.key[1]))
         else:
-            sys.stdout.write(str(n.key) + ' ')
+            sys.stdout.write(str(n.key[0]) + ': ' + str(n.key[1]))
 

@@ -43,6 +43,7 @@ class orderedSet(object):
 		self.__rbt = RBT(cmpFxn)
 		self.__cmp = cmpFxn
 		self.__size = 0
+		self.__type = None
 
 	def __contains__ (self, element):
 		'''
@@ -91,7 +92,10 @@ class orderedSet(object):
 		'''
 		returns the type of elements in the set
 		'''
-		return type(self.__rbt.getRoot().key)
+		root = self.__rbt.getRoot()
+		if root == None:
+			return None
+		return type(root.key)
 
 	def isEmpty (self):
 		'''
@@ -106,10 +110,12 @@ class orderedSet(object):
 		0 if not (element already is in the set)
 		'''
 		if self.__size != 0:
-			if self.type() != type(element):
-				error = '{} is not of the same type as the elements of the set'\
-					' {} != {}'.format(element, self.type(), type(element))
+			if self.__type != type(element):
+				error = '{} is not of the same type as the keys of the map'\
+					' {} != {}'.format(element, self.__type, type(element))
 				raise TypeError(error)
+		else:
+			self.__type = type(element)
 		status = self.__rbt.insert(element)
 		if status == 1:
 			self.__size += 1
@@ -122,9 +128,9 @@ class orderedSet(object):
 		0 if not (element doesn't exist in the set)
 		'''
 		if self.__size != 0:
-			if self.type() != type(element):
-				error = '{} is not of the same type as the elements of the set'\
-					' {} != {}'.format(element, self.type(), type(element))
+			if self.__type != type(element):
+				error = '{} is not of the same type as the elements of the map'\
+					' {} != {}'.format(element, self.__type, type(element))
 				raise TypeError(error)
 		status = self.__rbt.delete(element)
 		if status == 1:
@@ -137,13 +143,13 @@ class orderedSet(object):
 		'''
 		if not isinstance (other, self.__class__):
 			error = 'only an ordered set can be union\'d with the current set, '\
-				'while {} is an object of type {}'.format(other, type(other))
+				'while {} is an object of type {}'.format(other, other.__type)
 			raise TypeError(error)
 
 		if self.__size != 0:
-			if self.type() != other.type():
+			if self.__type != other.__type:
 				error = 'elements of the second set are not of the same type as this set'\
-					' {} != {}'.format(self.type(), other.type())
+					' {} != {}'.format(self.__type, other.__type)
 				raise TypeError(error)
 		for i in other:
 			self.__rbt.insert(i)
@@ -154,6 +160,8 @@ class orderedSet(object):
 		'''
 		self.__rbt = RBT(self.__cmp)
 		self.__size = 0
+		self.__type = None
+
 
 	def contains (self, element):
 		'''
@@ -163,7 +171,7 @@ class orderedSet(object):
 		'''
 		return self.__rbt.contains(element)
 
-	def print_set (self, order = 'in-order', pretty = False):
+	def printMap (self, order = 'in-order', pretty = False):
 		'''
 		prints the elements of the set,
 		this function performs the `in-order' walk on the binary search tree,
