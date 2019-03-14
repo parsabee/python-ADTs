@@ -300,14 +300,14 @@ class RBT_map (RBT):
         if self._root == None:
             self._root = self._newNode(pair)
             self._root.color = 'black'
-            return
+            return 1
         p = None
         tmp = self._root
         while tmp != self._sentinel:
             p = tmp
             if self._cmp(pair[0], tmp.key[0]) == 0:
                 tmp.key[1] = pair[1]
-                return
+                return 0
             if self._cmp(pair[0], tmp.key[0]) == 1:
                 tmp = tmp.rightChild
             else:
@@ -319,7 +319,7 @@ class RBT_map (RBT):
             p.leftChild = tmp
         tmp.parent = p
         self._rb_insert_fixup(tmp)
-        return
+        return 1
 
     def _search(self, key):
         tmp = self._root

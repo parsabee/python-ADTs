@@ -1,7 +1,40 @@
+__author__ = 'Parsa Bagheri'
+'''
+MIT License
+Copyright (c) 2019, Parsa Bagheri
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+'''
 from RedBlackTree import RBT_map
+
+# a generic implementation of a map container, using a red black tree as its backbones
 
 class orderedMap (object):
 	def __init__ (self, cmpFxn = lambda x, y: 1 if x > y else (0 if x == y else -1)):
+		'''
+		this ordered map uses a red black tree structure.
+		red black tree is an efficiant choice, because of the better amortized asymptotic complexity of look-up (O(log n))
+		initializer takes one argument:
+		(1) cmpFxn:
+			the compare function is used to determine the order of the keys being inserted,
+			the function must return 0 if first==second, -1 if first<second, and 1 if first>second
+			
+			NB - there is a default compare function for generic types,
+			however the user is responsible for providing a compare function for user defined types
+		'''
 		self.__rbt = RBT_map(cmpFxn)
 		self.__cmp = cmpFxn
 		self.__size = 0
