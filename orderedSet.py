@@ -171,7 +171,7 @@ class orderedSet(object):
 		'''
 		return self.__rbt.contains(element)
 
-	def printMap (self, order = 'in-order', pretty = False):
+	def printSet (self, order = 'in-order', pretty = False):
 		'''
 		prints the elements of the set,
 		this function performs the `in-order' walk on the binary search tree,
