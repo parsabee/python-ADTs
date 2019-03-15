@@ -347,9 +347,9 @@ class RBT_map (RBT):
     def _pretty_print(self, n, pretty):
         if pretty:
             if n.color == 'red':
-                sys.stdout.write('\033[1;31m{}: {} '.format(n.key[0], n.key[1]))
+                sys.stdout.write('\033[1;31m{}:{} '.format(n.key[0], n.key[1]))
             else:
-                sys.stdout.write('\033[1;30m{}: {} '.format(n.key[0], n.key[1]))
+                sys.stdout.write('\033[1;30m{}:{} '.format(n.key[0], n.key[1]))
         else:
-            sys.stdout.write(str(n.key[0]) + ': ' + str(n.key[1]))
+            sys.stdout.write(str(n.key[0]) + ':' + str(n.key[1]) + ' ')
 
