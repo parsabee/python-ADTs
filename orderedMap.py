@@ -18,7 +18,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 '''
-from RedBlackTree import RBT_map
+from dataStructure.RedBlackTree import RBT_map
 
 # a generic implementation of a map container, using a red black tree as its backbones
 
